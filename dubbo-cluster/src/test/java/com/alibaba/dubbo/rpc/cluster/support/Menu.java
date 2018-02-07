@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ */
 public class Menu {
 
     private Map<String, List<String>> menus = new HashMap<String, List<String>>();

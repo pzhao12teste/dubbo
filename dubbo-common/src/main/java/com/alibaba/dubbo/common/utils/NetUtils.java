@@ -183,7 +183,7 @@ public class NetUtils {
     }
 
     public static String getLogHost() {
-        InetAddress address = getLocalAddress();
+        InetAddress address = LOCAL_ADDRESS;
         return address == null ? LOCALHOST : address.getHostAddress();
     }
 

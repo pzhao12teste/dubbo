@@ -19,12 +19,12 @@ package com.alibaba.dubbo.qos.command.impl;
 import com.alibaba.dubbo.qos.command.BaseCommand;
 import com.alibaba.dubbo.qos.command.CommandContext;
 import com.alibaba.dubbo.qos.command.annotation.Cmd;
-import com.alibaba.dubbo.qos.common.QosConstants;
+import com.alibaba.dubbo.qos.common.Constants;
 
 @Cmd(name = "quit",summary = "quit telnet console")
 public class Quit implements BaseCommand {
     @Override
     public String execute(CommandContext commandContext, String[] args) {
-        return QosConstants.CLOSE;
+        return Constants.CLOSE;
     }
 }

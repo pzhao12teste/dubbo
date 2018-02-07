@@ -20,6 +20,8 @@ import com.alibaba.dubbo.rpc.gen.thrift.Demo;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+/**
+ */
 public class DubboDemoConsumer {
 
     public static void main(String[] args) throws Exception {

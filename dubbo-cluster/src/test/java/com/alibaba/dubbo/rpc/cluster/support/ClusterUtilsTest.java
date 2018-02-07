@@ -22,6 +22,8 @@ import com.alibaba.dubbo.common.URL;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ */
 public class ClusterUtilsTest {
 
     @Test

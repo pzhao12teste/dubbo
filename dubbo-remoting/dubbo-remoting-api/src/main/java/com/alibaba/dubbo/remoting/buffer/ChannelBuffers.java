@@ -19,6 +19,9 @@ package com.alibaba.dubbo.remoting.buffer;
 
 import java.nio.ByteBuffer;
 
+/**
+ *
+ */
 public final class ChannelBuffers {
 
     public static final ChannelBuffer EMPTY_BUFFER = new HeapChannelBuffer(0);

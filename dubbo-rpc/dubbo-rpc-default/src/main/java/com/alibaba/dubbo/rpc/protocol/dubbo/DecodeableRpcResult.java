@@ -18,7 +18,6 @@ package com.alibaba.dubbo.rpc.protocol.dubbo;
 
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
-import com.alibaba.dubbo.common.serialize.Cleanable;
 import com.alibaba.dubbo.common.serialize.ObjectInput;
 import com.alibaba.dubbo.common.utils.Assert;
 import com.alibaba.dubbo.common.utils.StringUtils;
@@ -70,7 +69,7 @@ public class DecodeableRpcResult extends RpcResult implements Codec, Decodeable 
     public Object decode(Channel channel, InputStream input) throws IOException {
         ObjectInput in = CodecSupport.getSerialization(channel.getUrl(), serializationType)
                 .deserialize(channel.getUrl(), input);
-        
+
         byte flag = in.readByte();
         switch (flag) {
             case DubboCodec.RESPONSE_NULL_VALUE:
@@ -97,9 +96,6 @@ public class DecodeableRpcResult extends RpcResult implements Codec, Decodeable 
                 break;
             default:
                 throw new IOException("Unknown result flag, expect '0' '1' '2', get " + flag);
-        }
-        if (in instanceof Cleanable) {
-            ((Cleanable) in).cleanup();
         }
         return this;
     }

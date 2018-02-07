@@ -53,8 +53,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -79,8 +77,8 @@ public class JavaSerializer extends AbstractSerializer {
         if (_writeReplace != null)
             _writeReplace.setAccessible(true);
 
-        List primitiveFields = new ArrayList();
-        List compoundFields = new ArrayList();
+        ArrayList primitiveFields = new ArrayList();
+        ArrayList compoundFields = new ArrayList();
 
         for (; cl != null; cl = cl.getSuperclass()) {
             Field[] fields = cl.getDeclaredFields();
@@ -103,10 +101,9 @@ public class JavaSerializer extends AbstractSerializer {
             }
         }
 
-        List fields = new ArrayList();
+        ArrayList fields = new ArrayList();
         fields.addAll(primitiveFields);
         fields.addAll(compoundFields);
-        Collections.reverse(fields);
 
         _fields = new Field[fields.size()];
         fields.toArray(_fields);

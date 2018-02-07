@@ -304,7 +304,7 @@ public class ReferenceConfig<T> extends AbstractReferenceConfig {
         appendParameters(map, module);
         appendParameters(map, consumer, Constants.DEFAULT_KEY);
         appendParameters(map, this);
-        String prefix = StringUtils.getServiceKey(map);
+        String prifix = StringUtils.getServiceKey(map);
         if (methods != null && methods.size() > 0) {
             for (MethodConfig method : methods) {
                 appendParameters(map, method, method.getName());
@@ -315,11 +315,12 @@ public class ReferenceConfig<T> extends AbstractReferenceConfig {
                         map.put(method.getName() + ".retries", "0");
                     }
                 }
-                appendAttributes(attributes, method, prefix + "." + method.getName());
+                appendAttributes(attributes, method, prifix + "." + method.getName());
                 checkAndConvertImplicitConfig(method, map, attributes);
             }
         }
 
+        //
         String hostToRegistry = ConfigUtils.getSystemProperty(Constants.DUBBO_IP_TO_REGISTRY);
         if (hostToRegistry == null || hostToRegistry.length() == 0) {
             hostToRegistry = NetUtils.getLocalHost();
@@ -473,7 +474,7 @@ public class ReferenceConfig<T> extends AbstractReferenceConfig {
             throw new IllegalStateException("The interface class " + interfaceClass + " is not a interface!");
         }
         this.interfaceClass = interfaceClass;
-        setInterface(interfaceClass == null ? null : interfaceClass.getName());
+        setInterface(interfaceClass == null ? (String) null : interfaceClass.getName());
     }
 
     public void setInterface(String interfaceName) {

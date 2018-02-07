@@ -78,10 +78,8 @@ public final class URL implements Serializable {
 
     private final String password;
 
-    // by default, host to registry
     private final String host;
 
-    // by default, port to registry
     private final int port;
 
     private final String path;

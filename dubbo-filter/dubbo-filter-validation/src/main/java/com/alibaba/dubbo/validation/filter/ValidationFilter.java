@@ -24,7 +24,6 @@ import com.alibaba.dubbo.rpc.Invocation;
 import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcException;
-import com.alibaba.dubbo.rpc.RpcResult;
 import com.alibaba.dubbo.validation.Validation;
 import com.alibaba.dubbo.validation.Validator;
 
@@ -51,7 +50,7 @@ public class ValidationFilter implements Filter {
             } catch (RpcException e) {
                 throw e;
             } catch (Throwable t) {
-                return new RpcResult(t);
+                throw new RpcException(t.getMessage(), t);
             }
         }
         return invoker.invoke(invocation);

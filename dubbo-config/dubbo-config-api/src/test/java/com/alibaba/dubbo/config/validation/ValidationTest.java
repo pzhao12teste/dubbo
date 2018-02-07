@@ -22,7 +22,6 @@ import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.alibaba.dubbo.config.ServiceConfig;
 import com.alibaba.dubbo.rpc.RpcException;
-import com.alibaba.dubbo.rpc.service.GenericException;
 import com.alibaba.dubbo.rpc.service.GenericService;
 
 import org.junit.Assert;
@@ -75,7 +74,8 @@ public class ValidationTest {
                     parameter.setExpiryDate(new Date(System.currentTimeMillis() + 1000000));
                     validationService.save(parameter);
                     Assert.fail();
-                } catch (ConstraintViolationException ve) {
+                } catch (RpcException e) {
+                    ConstraintViolationException ve = (ConstraintViolationException) e.getCause();
                     Set<ConstraintViolation<?>> violations = ve.getConstraintViolations();
                     Assert.assertNotNull(violations);
                 }
@@ -89,7 +89,8 @@ public class ValidationTest {
                     parameter.setExpiryDate(new Date(System.currentTimeMillis() + 1000000));
                     validationService.save(parameter);
                     Assert.fail();
-                } catch (ConstraintViolationException ve) {
+                } catch (RpcException e) {
+                    ConstraintViolationException ve = (ConstraintViolationException) e.getCause();
                     Set<ConstraintViolation<?>> violations = ve.getConstraintViolations();
                     Assert.assertNotNull(violations);
                 }
@@ -104,7 +105,8 @@ public class ValidationTest {
                     parameter.setExpiryDate(new Date(System.currentTimeMillis() + 1000000));
                     validationService.relatedQuery(parameter);
                     Assert.fail();
-                } catch (ConstraintViolationException ve) {
+                } catch (RpcException e) {
+                    ConstraintViolationException ve = (ConstraintViolationException) e.getCause();
                     Set<ConstraintViolation<?>> violations = ve.getConstraintViolations();
                     Assert.assertEquals(violations.size(),2);
                 }
@@ -114,7 +116,8 @@ public class ValidationTest {
                     parameter = new ValidationParameter();
                     validationService.save(parameter);
                     Assert.fail();
-                } catch (ConstraintViolationException ve) {
+                } catch (RpcException e) {
+                    ConstraintViolationException ve = (ConstraintViolationException) e.getCause();
                     Set<ConstraintViolation<?>> violations = ve.getConstraintViolations();
                     Assert.assertTrue(violations.size() == 3);
                     Assert.assertNotNull(violations);
@@ -127,7 +130,8 @@ public class ValidationTest {
                 try {
                     validationService.delete(2, "a");
                     Assert.fail();
-                } catch (ConstraintViolationException ve) {
+                } catch (RpcException e) {
+                    ConstraintViolationException ve = (ConstraintViolationException) e.getCause();
                     Set<ConstraintViolation<?>> violations = ve.getConstraintViolations();
                     Assert.assertNotNull(violations);
                     Assert.assertEquals(1, violations.size());
@@ -137,7 +141,8 @@ public class ValidationTest {
                 try {
                     validationService.delete(0, "abc");
                     Assert.fail();
-                } catch (ConstraintViolationException ve) {
+                } catch (RpcException e) {
+                    ConstraintViolationException ve = (ConstraintViolationException) e.getCause();
                     Set<ConstraintViolation<?>> violations = ve.getConstraintViolations();
                     Assert.assertNotNull(violations);
                     Assert.assertEquals(1, violations.size());
@@ -145,7 +150,8 @@ public class ValidationTest {
                 try {
                     validationService.delete(2, null);
                     Assert.fail();
-                } catch (ConstraintViolationException ve) {
+                } catch (RpcException e) {
+                    ConstraintViolationException ve = (ConstraintViolationException) e.getCause();
                     Set<ConstraintViolation<?>> violations = ve.getConstraintViolations();
                     Assert.assertNotNull(violations);
                     Assert.assertEquals(1, violations.size());
@@ -153,7 +159,8 @@ public class ValidationTest {
                 try {
                     validationService.delete(0, null);
                     Assert.fail();
-                } catch (ConstraintViolationException ve) {
+                } catch (RpcException e) {
+                    ConstraintViolationException ve = (ConstraintViolationException) e.getCause();
                     Set<ConstraintViolation<?>> violations = ve.getConstraintViolations();
                     Assert.assertNotNull(violations);
                     Assert.assertEquals(2, violations.size());
@@ -245,7 +252,7 @@ public class ValidationTest {
             ReferenceConfig<GenericService> reference = new ReferenceConfig<GenericService>();
             reference.setApplication(new ApplicationConfig("validation-consumer"));
             reference.setInterface(ValidationService.class.getName());
-            reference.setUrl("dubbo://127.0.0.1:29582?scope=remote&validation=true&timeout=9000000");
+            reference.setUrl("dubbo://127.0.0.1:29582?scope=remote&validation=true");
             reference.setGeneric(true);
             GenericService validationService = reference.get();
             try {
@@ -263,8 +270,8 @@ public class ValidationTest {
                     parameter = new HashMap<String, Object>();
                     validationService.$invoke("save", new String[]{ValidationParameter.class.getName()}, new Object[]{parameter});
                     Assert.fail();
-                } catch (GenericException e) {
-                    Assert.assertTrue(e.getMessage().contains("Failed to validate service"));
+                } catch (RpcException e) {
+                    Assert.assertTrue(e.getMessage().contains("ConstraintViolation"));
                 }
 
                 // Delete OK
@@ -274,23 +281,21 @@ public class ValidationTest {
                 try {
                     validationService.$invoke("delete", new String[]{long.class.getName(), String.class.getName()}, new Object[]{0, "abc"});
                     Assert.fail();
-                } catch (GenericException e) {
-                    Assert.assertTrue(e.getMessage().contains("Failed to validate service"));
+                } catch (RpcException e) {
+                    Assert.assertTrue(e.getMessage().contains("ConstraintViolation"));
                 }
                 try {
                     validationService.$invoke("delete", new String[]{long.class.getName(), String.class.getName()}, new Object[]{2, null});
                     Assert.fail();
-                } catch (GenericException e) {
-                    Assert.assertTrue(e.getMessage().contains("Failed to validate service"));
+                } catch (RpcException e) {
+                    Assert.assertTrue(e.getMessage().contains("ConstraintViolation"));
                 }
                 try {
                     validationService.$invoke("delete", new String[]{long.class.getName(), String.class.getName()}, new Object[]{0, null});
                     Assert.fail();
-                } catch (GenericException e) {
-                    Assert.assertTrue(e.getMessage().contains("Failed to validate service"));
+                } catch (RpcException e) {
+                    Assert.assertTrue(e.getMessage().contains("ConstraintViolation"));
                 }
-            } catch (GenericException e) {
-                Assert.assertTrue(e.getMessage().contains("Failed to validate service"));
             } finally {
                 reference.destroy();
             }

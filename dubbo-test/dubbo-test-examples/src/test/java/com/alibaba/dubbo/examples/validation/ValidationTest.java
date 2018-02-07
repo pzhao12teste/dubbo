@@ -1,13 +1,12 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * Copyright 1999-2012 Alibaba Group.
+ *  
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *  
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *  
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,6 +17,7 @@ package com.alibaba.dubbo.examples.validation;
 
 import com.alibaba.dubbo.examples.validation.api.ValidationParameter;
 import com.alibaba.dubbo.examples.validation.api.ValidationService;
+import com.alibaba.dubbo.rpc.RpcException;
 
 import junit.framework.Assert;
 import org.junit.Test;
@@ -62,7 +62,8 @@ public class ValidationTest {
                     parameter.setExpiryDate(new Date(System.currentTimeMillis() + 1000000));
                     validationService.save(parameter);
                     Assert.fail();
-                } catch (ConstraintViolationException ve) {
+                } catch (RpcException e) {
+                    ConstraintViolationException ve = (ConstraintViolationException) e.getCause();
                     Set<ConstraintViolation<?>> violations = ve.getConstraintViolations();
                     Assert.assertNotNull(violations);
                 }
@@ -72,7 +73,8 @@ public class ValidationTest {
                     parameter = new ValidationParameter();
                     validationService.save(parameter);
                     Assert.fail();
-                } catch (ConstraintViolationException ve) {
+                } catch (RpcException e) {
+                    ConstraintViolationException ve = (ConstraintViolationException) e.getCause();
                     Set<ConstraintViolation<?>> violations = ve.getConstraintViolations();
                     Assert.assertNotNull(violations);
                 }
@@ -84,7 +86,8 @@ public class ValidationTest {
                 try {
                     validationService.delete(2, "a");
                     Assert.fail();
-                } catch (ConstraintViolationException ve) {
+                } catch (RpcException e) {
+                    ConstraintViolationException ve = (ConstraintViolationException) e.getCause();
                     Set<ConstraintViolation<?>> violations = ve.getConstraintViolations();
                     Assert.assertNotNull(violations);
                     Assert.assertEquals(1, violations.size());
@@ -94,7 +97,8 @@ public class ValidationTest {
                 try {
                     validationService.delete(0, "abc");
                     Assert.fail();
-                } catch (ConstraintViolationException ve) {
+                } catch (RpcException e) {
+                    ConstraintViolationException ve = (ConstraintViolationException) e.getCause();
                     Set<ConstraintViolation<?>> violations = ve.getConstraintViolations();
                     Assert.assertNotNull(violations);
                     Assert.assertEquals(1, violations.size());
@@ -102,7 +106,8 @@ public class ValidationTest {
                 try {
                     validationService.delete(2, null);
                     Assert.fail();
-                } catch (ConstraintViolationException ve) {
+                } catch (RpcException e) {
+                    ConstraintViolationException ve = (ConstraintViolationException) e.getCause();
                     Set<ConstraintViolation<?>> violations = ve.getConstraintViolations();
                     Assert.assertNotNull(violations);
                     Assert.assertEquals(1, violations.size());
@@ -110,7 +115,8 @@ public class ValidationTest {
                 try {
                     validationService.delete(0, null);
                     Assert.fail();
-                } catch (ConstraintViolationException ve) {
+                } catch (RpcException e) {
+                    ConstraintViolationException ve = (ConstraintViolationException) e.getCause();
                     Set<ConstraintViolation<?>> violations = ve.getConstraintViolations();
                     Assert.assertNotNull(violations);
                     Assert.assertEquals(2, violations.size());
