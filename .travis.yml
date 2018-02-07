@@ -1,3 +1,5 @@
+after_success:
+- bash <(curl -s https://codecov.io/bash)
 before_cache:
 - rm -rf $HOME/CACHE; find $TRAVIS_BUILD_DIR -name .ekstazi | while read line; do
   du -sh $line;         DIR=$(dirname $HOME/CACHE$line); mkdir -p $DIR; cp -r $line
@@ -28,7 +30,8 @@ language: java
 script:
 - touch /tmp/NOW
 - echo GIBSTUDYSTART $(date)
-- mvn clean package
+- mvn cobertura:cobertura
 - echo GIBSTUDYEND $(date)
 - cd $TRAVIS_BUILD_DIR
 - echo TESTNUM $(find . -name TEST-*.xml -newer /tmp/NOW | wc -l)
+sudo: false
