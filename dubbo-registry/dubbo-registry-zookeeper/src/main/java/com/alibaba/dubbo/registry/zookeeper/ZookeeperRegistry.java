@@ -234,16 +234,16 @@ public class ZookeeperRegistry extends FailbackRegistry {
     }
 
     private String[] toCategoriesPath(URL url) {
-        String[] categories;
+        String[] categroies;
         if (Constants.ANY_VALUE.equals(url.getParameter(Constants.CATEGORY_KEY))) {
-            categories = new String[]{Constants.PROVIDERS_CATEGORY, Constants.CONSUMERS_CATEGORY,
+            categroies = new String[]{Constants.PROVIDERS_CATEGORY, Constants.CONSUMERS_CATEGORY,
                     Constants.ROUTERS_CATEGORY, Constants.CONFIGURATORS_CATEGORY};
         } else {
-            categories = url.getParameter(Constants.CATEGORY_KEY, new String[]{Constants.DEFAULT_CATEGORY});
+            categroies = url.getParameter(Constants.CATEGORY_KEY, new String[]{Constants.DEFAULT_CATEGORY});
         }
-        String[] paths = new String[categories.length];
-        for (int i = 0; i < categories.length; i++) {
-            paths[i] = toServicePath(url) + Constants.PATH_SEPARATOR + categories[i];
+        String[] paths = new String[categroies.length];
+        for (int i = 0; i < categroies.length; i++) {
+            paths[i] = toServicePath(url) + Constants.PATH_SEPARATOR + categroies[i];
         }
         return paths;
     }

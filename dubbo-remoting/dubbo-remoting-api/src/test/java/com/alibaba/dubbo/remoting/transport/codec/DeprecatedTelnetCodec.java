@@ -38,6 +38,9 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ *
+ */
 public class DeprecatedTelnetCodec implements Codec {
 
     private static final Logger logger = LoggerFactory.getLogger(DeprecatedTelnetCodec.class);

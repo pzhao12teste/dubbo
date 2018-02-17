@@ -25,6 +25,9 @@ import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *
+ */
 public class MockedChannel implements Channel {
     private boolean isClosed;
     private volatile boolean closing = false;

@@ -113,9 +113,7 @@ public class RegistryProtocolTest {
         assertEquals("y", exporter.getInvoker().getUrl().getParameter("x"));
 
         exporter.unexport();
-//        int timeout = ConfigUtils.getServerShutdownTimeout();
-//        Thread.sleep(timeout + 1000);
-//        assertEquals(false, exporter.getInvoker().isAvailable());
+        assertEquals(false, exporter.getInvoker().isAvailable());
         destroyRegistryProtocol();
 
     }

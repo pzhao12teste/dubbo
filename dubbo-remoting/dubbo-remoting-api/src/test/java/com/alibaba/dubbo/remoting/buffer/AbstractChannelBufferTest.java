@@ -34,6 +34,9 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 
+/**
+ *
+ */
 public abstract class AbstractChannelBufferTest {
 
     private static final int CAPACITY = 4096; // Must be even

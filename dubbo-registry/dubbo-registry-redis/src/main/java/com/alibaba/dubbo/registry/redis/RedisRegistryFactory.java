@@ -18,16 +18,15 @@ package com.alibaba.dubbo.registry.redis;
 
 import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.registry.Registry;
-import com.alibaba.dubbo.registry.support.AbstractRegistryFactory;
+import com.alibaba.dubbo.registry.RegistryFactory;
 
 /**
  * RedisRegistryFactory
  *
  */
-public class RedisRegistryFactory extends AbstractRegistryFactory {
+public class RedisRegistryFactory implements RegistryFactory {
 
-    @Override
-    protected Registry createRegistry(URL url) {
+    public Registry getRegistry(URL url) {
         return new RedisRegistry(url);
     }
 

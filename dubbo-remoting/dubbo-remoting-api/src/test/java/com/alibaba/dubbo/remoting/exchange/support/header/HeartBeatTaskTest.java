@@ -30,6 +30,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ *
+ */
 public class HeartBeatTaskTest {
 
     private URL url = URL.valueOf("dubbo://localhost:20880");

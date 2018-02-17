@@ -23,6 +23,9 @@ import com.alibaba.dubbo.remoting.RemotingException;
 import com.alibaba.dubbo.remoting.Server;
 import com.alibaba.dubbo.remoting.Transporter;
 
+/**
+ *
+ */
 public class MinaTransporter implements Transporter {
 
     public static final String NAME = "mina";

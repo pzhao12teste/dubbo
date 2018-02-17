@@ -18,6 +18,8 @@ package com.alibaba.dubbo.rpc.protocol.thrift.examples;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+/**
+ */
 public class DubboDemoProvider {
 
     public static void main(String[] args) throws Exception {

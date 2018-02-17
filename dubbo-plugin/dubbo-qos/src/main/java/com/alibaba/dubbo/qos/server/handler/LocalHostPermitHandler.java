@@ -17,7 +17,8 @@
 package com.alibaba.dubbo.qos.server.handler;
 
 
-import com.alibaba.dubbo.qos.common.QosConstants;
+import com.alibaba.dubbo.common.utils.ConfigUtils;
+import com.alibaba.dubbo.qos.common.Constants;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -30,18 +31,14 @@ import java.net.InetSocketAddress;
 public class LocalHostPermitHandler extends ChannelHandlerAdapter {
 
     // true means to accept foreign IP
-    private  boolean acceptForeignIp;
-
-    public LocalHostPermitHandler(boolean acceptForeignIp) {
-        this.acceptForeignIp = acceptForeignIp;
-    }
+    private static boolean acceptForeignIp = Boolean.valueOf(ConfigUtils.getProperty(Constants.ACCEPT_FOREIGN_IP, "true"));
 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         if (!acceptForeignIp) {
             if (!((InetSocketAddress) ctx.channel().remoteAddress()).getAddress().isLoopbackAddress()) {
-                ByteBuf cb = Unpooled.wrappedBuffer((QosConstants.BR_STR + "Foreign Ip Not Permitted."
-                        + QosConstants.BR_STR).getBytes());
+                ByteBuf cb = Unpooled.wrappedBuffer((Constants.BR_STR + "Foreign Ip Not Permitted."
+                        + Constants.BR_STR).getBytes());
                 ctx.writeAndFlush(cb).addListener(ChannelFutureListener.CLOSE);
             }
         }

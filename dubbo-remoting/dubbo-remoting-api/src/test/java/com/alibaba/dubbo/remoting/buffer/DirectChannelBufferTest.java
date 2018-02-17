@@ -18,6 +18,9 @@ package com.alibaba.dubbo.remoting.buffer;
 
 import junit.framework.Assert;
 
+/**
+ *
+ */
 public class DirectChannelBufferTest extends AbstractChannelBufferTest {
 
     private ChannelBuffer buffer;

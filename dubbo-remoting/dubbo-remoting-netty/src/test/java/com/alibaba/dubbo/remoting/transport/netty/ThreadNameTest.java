@@ -26,6 +26,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ *
+ */
 public class ThreadNameTest {
 
     private NettyServer server;
